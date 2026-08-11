@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>StudyTrack — All Students</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--a:#4f46e5;--a2:#7c3aed;--soft:#eef2ff;--green:#16a34a}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:88px}header{padding:22px 20px 8px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:24px;font-weight:850}.brand span{color:var(--a)}button,input,select{font:inherit}button{cursor:pointer;border:0}
+.icon{width:42px;height:42px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.page{display:none;padding:12px 20px}.page.active{display:block}.hello h1{margin:5px 0;font-size:25px}.muted{color:var(--muted);font-size:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 5px 22px #00000008}
+.hero{background:linear-gradient(135deg,#eef2ff,#f5f3ff)}.hero h2{margin:0 0 6px}.hero p{margin:0 0 16px;color:var(--muted)}
+.primary{width:100%;padding:14px 16px;border-radius:15px;background:linear-gradient(135deg,var(--a),var(--a2));color:#fff;font-weight:800}
+.secondary{padding:10px 13px;border-radius:12px;background:var(--soft);color:var(--a);font-weight:750}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px}.stat b{display:block;font-size:23px;margin-top:4px}
+.progress{height:9px;background:#e9eaf1;border-radius:99px;overflow:hidden}.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:99px}
+.title{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 10px}.title h2{font-size:17px;margin:0}
+.task{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.check{width:23px;height:23px;border:2px solid #cbd5e1;border-radius:7px;background:#fff}.check.done{background:var(--green);color:#fff;border-color:var(--green)}
+.task.done .name{text-decoration:line-through;color:var(--muted)}.name{flex:1}.small{font-size:12px;color:var(--muted)}
+.subject{padding:14px 0;border-bottom:1px solid var(--line)}.subject:last-child{border:0}.subject-top{display:flex;justify-content:space-between}
+.field{width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;background:#fff;outline:0}.add{display:flex;gap:8px}.add .field{flex:1}
+.timer{text-align:center;padding:28px 10px}.select{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff}.clock{font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;margin:20px 0 5px}.actions{display:flex;gap:8px}.actions>*{flex:1}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:5}.nav button{background:none;color:#8b93a3;font-size:11px;font-weight:750}.nav button b{display:block;font-size:21px;margin-bottom:2px}.nav button.active{color:var(--a)}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;z-index:10}.modal.show{display:flex}.sheet{background:#fff;width:min(520px,100%);padding:20px;border-radius:24px 24px 0 0}.sheet h2{margin-top:0}.close{float:right;background:#f3f4f6;width:36px;height:36px;border-radius:10px}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice button{text-align:left;padding:15px;border:1px solid var(--line);border-radius:16px;background:#fff}.choice button.selected{border:2px solid var(--a);background:var(--soft)}.choice strong{display:block}.empty{text-align:center;padding:20px;color:var(--muted)}
+</style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#4f46e5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="StudyTrack">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+<div class="app">
+<header><div class="brand">Study<span>Track</span></div><button class="icon" onclick="editProfile()">⚙️</button></header>
+
+<section id="home" class="page active">
+<div class="hello"><h1 id="hello">Good evening 👋</h1><div class="muted" id="profileLine">Student • All streams</div></div>
+<div class="card hero"><h2>Ready to study?</h2><p id="goalLine">Set a goal and make progress every day.</p><button class="primary" onclick="show('timer')">▶ Start Study Session</button></div>
+<div class="card"><div style="display:flex;justify-content:space-between"><b>Today's Goal</b><b id="pct">0%</b></div><div class="progress" style="margin:12px 0 8px"><i id="bar" style="width:0%"></i></div><div class="muted"><span id="today">0m</span> studied • Goal <span id="goal">5h</span></div></div>
+<div class="grid"><div class="stat"><div class="muted">🔥 Streak</div><b id="streak">0 days</b></div><div class="stat"><div class="muted">⏱ Sessions</div><b id="sessions">0</b></div></div>
+<div class="title"><h2>Today's Tasks</h2><button class="secondary" onclick="taskModal()">+ Add</button></div>
+<div class="card" id="tasks"></div>
+</section>
+
+<section id="timer" class="page">
+<div class="title"><h2>Study Timer</h2></div>
+<div class="card timer">
+<select class="select" id="subjectSelect"></select>
+<div class="clock" id="clock">25:00</div><div class="muted" id="timerStatus">Ready to focus</div>
+<div class="actions" style="margin-top:22px"><button class="secondary" onclick="resetTimer()">↺ Reset</button><button class="primary" id="timerBtn" onclick="toggleTimer()">▶ Start</button></div>
+<p class="small" style="margin-top:14px">Finish a session to automatically add study time to your progress.</p>
+</div>
+<div class="card"><b>Focus tip</b><p class="muted">Choose one subject, silence distractions, and focus until the session ends.</p></div>
+</section>
+
+<section id="progress" class="page">
+<div class="title"><h2>Progress</h2></div>
+<div class="grid"><div class="stat"><div class="muted">Today</div><b id="pToday">0m</b></div><div class="stat"><div class="muted">This week</div><b id="pWeek">0m</b></div><div class="stat"><div class="muted">All time</div><b id="pAll">0m</b></div><div class="stat"><div class="muted">Best streak</div><b id="best">0</b></div></div>
+<div class="title"><h2>By Subject</h2></div><div class="card" id="subjectStats"></div>
+</section>
+
+<section id="subjects" class="page">
+<div class="title"><h2>My Subjects</h2><button class="secondary" onclick="addSubjectPrompt()">+ Add</button></div>
+<div class="card" id="subjectList"></div>
+<div class="card"><b>Quick add</b><p class="muted">Add any subject — school, college, entrance exam or self-study.</p><div class="add"><input class="field" id="newSubject" placeholder="e.g. Biology"><button class="secondary" onclick="addSubject()">Add</button></div></div>
+</section>
+
+<div class="nav"><button class="active" data-id="home" onclick="show('home')"><b>⌂</b>Home</button><button data-id="timer" onclick="show('timer')"><b>⏱</b>Timer</button><button data-id="progress" onclick="show('progress')"><b>◔</b>Progress</button><button data-id="subjects" onclick="show('subjects')"><b>📚</b>Subjects</button></div>
+</div>
+
+<div class="modal" id="modal"><div class="sheet"><button class="close" onclick="closeModal()">✕</button><h2 id="modalTitle">Add Task</h2><div id="modalBody"></div></div></div>
+
+<script>
+const K='studytrack_all_v2';
+let d=JSON.parse(localStorage.getItem(K)||'null')||{
+ name:'Student',stream:'Other',goal:300,
+ subjects:['Mathematics','English','General Studies'],tasks:[],sessions:[],best:0
+};
+let t={sec:1500,running:false,int:null,subject:d.subjects[0]||'Study'};
+const save=()=>localStorage.setItem(K,JSON.stringify(d));
+const key=()=>new Date().toISOString().slice(0,10);
+const minsToday=()=>d.sessions.filter(x=>x.date===key()).reduce((a,x)=>a+x.minutes,0);
+const fmt=m=>{m=Math.round(m);return m<60?m+'m':Math.floor(m/60)+'h '+(m%60?m%60+'m':'')};
+function week(){let now=new Date(),start=new Date(now);start.setHours(0,0,0,0);start.setDate(start.getDate()-6);return d.sessions.filter(x=>new Date(x.date+'T23:59:59')>=start).reduce((a,x)=>a+x.minutes,0)}
+function streak(){let days=[...new Set(d.sessions.map(x=>x.date))].sort().reverse(),n=0,c=new Date();for(let x of days){if(x===c.toISOString().slice(0,10)){n++;c.setDate(c.getDate()-1)}else break}return n}
+function render(){
+let m=minsToday(),p=Math.min(100,Math.round(m/d.goal*100)),s=streak();d.best=Math.max(d.best||0,s);save();
+document.getElementById('hello').textContent=(new Date().getHours()<12?'Good morning':new Date().getHours()<17?'Good afternoon':'Good evening')+' 👋';
+document.getElementById('profileLine').textContent=d.name+' • '+d.stream;
+document.getElementById('goalLine').textContent=p>=100?'🎉 Daily goal completed! Great work.':fmt(Math.max(0,d.goal-m))+' left to reach today’s goal.';
+document.getElementById('pct').textContent=p+'%';document.getElementById('bar').style.width=p+'%';document.getElementById('today').textContent=fmt(m);document.getElementById('goal').textContent=fmt(d.goal);document.getElementById('streak').textContent=s+' day'+(s===1?'':'s');document.getElementById('sessions').textContent=d.sessions.length;
+document.getElementById('tasks').innerHTML=d.tasks.length?d.tasks.map((x,i)=>`<div class="task ${x.done?'done':''}"><button class="check ${x.done?'done':''}" onclick="toggleTask(${i})">${x.done?'✓':''}</button><div class="name">${esc(x.name)}</div><button class="small" onclick="delTask(${i})">Delete</button></div>`).join(''):'<div class="empty">No tasks yet.<br>Add your first study task.</div>';
+document.getElementById('subjectList').innerHTML=d.subjects.map((x,i)=>{let m=d.sessions.filter(s=>s.subject===x).reduce((a,s)=>a+s.minutes,0);return `<div class="subject"><div class="subject-top"><b>📚 ${esc(x)}</b><button class="small" onclick="removeSubject(${i})">Remove</button></div><div class="small" style="margin-top:4px">${fmt(m)} studied</div></div>`}).join('');
+document.getElementById('subjectSelect').innerHTML=d.subjects.map(x=>`<option>${esc(x)}</option>`).join('')||'<option>Study</option>';if(d.subjects.includes(t.subject))document.getElementById('subjectSelect').value=t.subject;document.getElementById('subjectSelect').onchange=e=>t.subject=e.target.value;
+document.getElementById('pToday').textContent=fmt(m);document.getElementById('pWeek').textContent=fmt(week());document.getElementById('pAll').textContent=fmt(d.sessions.reduce((a,x)=>a+x.minutes,0));document.getElementById('best').textContent=d.best||0;
+document.getElementById('subjectStats').innerHTML=d.subjects.map(x=>{let q=d.sessions.filter(s=>s.subject===x).reduce((a,s)=>a+s.minutes,0),max=Math.max(1,...d.subjects.map(y=>d.sessions.filter(s=>s.subject===y).reduce((a,s)=>a+s.minutes,0)));return `<div style="margin:14px 0"><div style="display:flex;justify-content:space-between"><b>${esc(x)}</b><span class="small">${fmt(q)}</span></div><div class="progress" style="margin-top:7px"><i style="width:${Math.round(q/max*100)}%"></i></div></div>`}).join('')||'<div class="empty">Add subjects to see statistics.</div>';
+}
+function show(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.id===id));scrollTo(0,0)}
+function taskModal(){document.getElementById('modalTitle').textContent='Add Task';document.getElementById('modalBody').innerHTML=`<input id="taskField" class="field" placeholder="e.g. Revise Physics Chapter 2"><button class="primary" style="margin-top:12px" onclick="addTask()">Add Task</button>`;document.getElementById('modal').classList.add('show');setTimeout(()=>taskField.focus(),50)}
+function addTask(){let v=taskField.value.trim();if(v){d.tasks.unshift({name:v,done:false});save();closeModal();render()}}
+function toggleTask(i){d.tasks[i].done=!d.tasks[i].done;save();render()}function delTask(i){d.tasks.splice(i,1);save();render()}
+function addSubject(){let v=document.getElementById('newSubject').value.trim();if(v&&!d.subjects.includes(v)){d.subjects.push(v);document.getElementById('newSubject').value='';save();render()}}
+function addSubjectPrompt(){let v=prompt('Subject name');if(v&&v.trim()&&!d.subjects.includes(v.trim())){d.subjects.push(v.trim());save();render()}}
+function removeSubject(i){if(d.subjects.length<=1)return alert('Keep at least one subject.');if(confirm('Remove '+d.subjects[i]+'?')){d.subjects.splice(i,1);save();render()}}
+function editProfile(){
+document.getElementById('modalTitle').textContent='Student Setup';
+document.getElementById('modalBody').innerHTML=`<input id="nameField" class="field" value="${esc(d.name)}" placeholder="Your name"><p class="muted">Choose your stream / study category</p><div class="choice">${['Science','Commerce','Arts / Humanities','School / College','Competitive Exam','Other'].map(x=>`<button class="${d.stream===x?'selected':''}" onclick="chooseStream(this,'${x}')">📚 <strong>${x}</strong><span class="small">Flexible subjects</span></button>`).join('')}</div><button class="primary" style="margin-top:14px" onclick="saveProfile()">Save</button>`;
+document.getElementById('modal').classList.add('show')
+}
+let chosen=null;function chooseStream(el,x){chosen=x;document.querySelectorAll('.choice button').forEach(b=>b.classList.remove('selected'));el.classList.add('selected')}
+function saveProfile(){let n=document.getElementById('nameField').value.trim();if(n)d.name=n;if(chosen)d.stream=chosen;save();closeModal();render()}
+function closeModal(){document.getElementById('modal').classList.remove('show');chosen=null}
+function resetTimer(){clearInterval(t.int);t.running=false;t.sec=1500;document.getElementById('timerBtn').textContent='▶ Start';document.getElementById('timerStatus').textContent='Ready to focus';clock()}
+function clock(){let m=Math.floor(t.sec/60),s=t.sec%60;document.getElementById('clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function toggleTimer(){if(t.running){clearInterval(t.int);t.running=false;document.getElementById('timerBtn').textContent='▶ Resume';document.getElementById('timerStatus').textContent='Paused';return}t.running=true;document.getElementById('timerBtn').textContent='⏸ Pause';document.getElementById('timerStatus').textContent='Focus mode is on';t.int=setInterval(()=>{t.sec--;clock();if(t.sec<=0)finish()},1000)}
+function finish(){clearInterval(t.int);t.running=false;d.sessions.push({date:key(),minutes:25,subject:t.subject||'Study'});save();t.sec=1500;document.getElementById('timerBtn').textContent='▶ Start';document.getElementById('timerStatus').textContent='Session saved 🎉';clock();render()}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+render();clock();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(console.error));
+}
+</script>
+</body>
+</html>
