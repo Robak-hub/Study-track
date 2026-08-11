@@ -1,2 +1,1 @@
-# Study-track
-A simple study tracker app for students to plan, focus, and track their study progress.
+StudyTrack V1.2 — Settings stream-change bug fixed. Existing data is preserved; standard subjects for the new stream are added automatically.

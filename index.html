@@ -141,7 +141,32 @@ function deleteTask(id){db.tasks=db.tasks.filter(x=>x.id!==id);save();render();t
 function openSubject(){openModal(`<h2>Add subject</h2><div class="field"><label>Subject name</label><input id="subjectName" placeholder="e.g. Accountancy"></div><button class="primary" onclick="addSubject()">Add subject</button>`)}
 function addSubject(){let n=document.getElementById('subjectName').value.trim();if(!n)return toast('Enter a subject');if(db.subjects.some(s=>s.name.toLowerCase()===n.toLowerCase()))return toast('Subject already exists');db.subjects.push({name:n,stream:db.profile.stream});save();closeModal();render();toast('Subject added ✓')}
 function openSettings(){openModal(`<h2>Settings</h2><div class="field"><label>Study category</label><select id="setStream">${streams.map(s=>`<option ${s===db.profile.stream?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label>Daily goal (minutes)</label><input id="setGoal" type="number" min="15" step="15" value="${db.profile.goal}"></div><button class="primary" onclick="saveSettings()">Save settings</button><div style="margin-top:12px"><button class="secondary" style="width:100%" onclick="resetAll()">Reset all data</button></div>`)}
-function saveSettings(){db.profile.stream=document.getElementById('setStream').value;db.profile.goal=Math.max(15,+document.getElementById('setGoal').value||120);save();closeModal();render();toast('Settings saved ✓')}
+function defaultSubjectsFor(stream){
+  const defaults={
+    Science:['Physics','Chemistry','Mathematics','Biology'],
+    Commerce:['Accountancy','Business Studies','Economics','English'],
+    'Arts / Humanities':['History','Political Science','Geography','English'],
+    School:['Mathematics','Science','English'],
+    College:['Major Subject','English'],
+    'Competitive Exam':['Quantitative Aptitude','Reasoning','English','Current Affairs'],
+    Custom:[]
+  };
+  return defaults[stream]||[];
+}
+function saveSettings(){
+  const newStream=document.getElementById('setStream').value;
+  const oldStream=db.profile.stream;
+  db.profile.stream=newStream;
+  db.profile.goal=Math.max(15,+document.getElementById('setGoal').value||120);
+  if(newStream!==oldStream){
+    const existing=new Set(db.subjects.map(s=>s.name.toLowerCase()));
+    defaultSubjectsFor(newStream).forEach(name=>{
+      if(!existing.has(name.toLowerCase())) db.subjects.push({name,stream:newStream});
+    });
+  }
+  save();closeModal();render();
+  toast(newStream!==oldStream?'Stream updated — subjects added ✓':'Settings saved ✓');
+}
 function resetAll(){if(confirm('Delete all StudyTrack data?')){localStorage.removeItem(KEY);location.reload()}}
 function openModal(c){document.getElementById('modalContent').innerHTML=c;document.getElementById('modal').classList.add('open')}
 function closeModal(){document.getElementById('modal').classList.remove('open')}
@@ -160,7 +185,13 @@ function finishTimer(auto=false){
  timer.remaining=1500;timer.started=0;document.getElementById('timerBtn').textContent='▶ Start';timerDisplay();render()
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function finishOnboarding(){let chosen=document.querySelector('.choice.selected');db.profile.stream=chosen?chosen.dataset.v: 'Student';db.profile.goal=Math.max(15,+document.getElementById('onGoal').value||120);let defaults={Science:['Physics','Chemistry','Mathematics','Biology'],Commerce:['Accountancy','Business Studies','Economics','English'], 'Arts / Humanities':['History','Political Science','Geography','English'],School:['Mathematics','Science','English'],College:['Major Subject','English'], 'Competitive Exam':['Quantitative Aptitude','Reasoning','English','Current Affairs'],Custom:[]};db.subjects=(defaults[db.profile.stream]||[]).map(name=>({name,stream:db.profile.stream}));save();document.getElementById('onboard').classList.remove('show');render();toast('Welcome to StudyTrack 🎉')}
+function finishOnboarding(){
+  let chosen=document.querySelector('.choice.selected');
+  db.profile.stream=chosen?chosen.dataset.v:'Student';
+  db.profile.goal=Math.max(15,+document.getElementById('onGoal').value||120);
+  db.subjects=defaultSubjectsFor(db.profile.stream).map(name=>({name,stream:db.profile.stream}));
+  save();document.getElementById('onboard').classList.remove('show');render();toast('Welcome to StudyTrack 🎉')
+}
 function init(){if(!localStorage.getItem(KEY)){document.getElementById('choices').innerHTML=streams.map(s=>`<button class="choice" data-v="${s}" onclick="document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">${s}</button>`).join('');document.getElementById('onboard').classList.add('show')}render();timerDisplay()}
 init();
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
