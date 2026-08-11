@@ -1,133 +1,169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<title>StudyTrack — All Students</title>
-<style>
-:root{--bg:#f6f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--a:#4f46e5;--a2:#7c3aed;--soft:#eef2ff;--green:#16a34a}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
-.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:88px}header{padding:22px 20px 8px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-size:24px;font-weight:850}.brand span{color:var(--a)}button,input,select{font:inherit}button{cursor:pointer;border:0}
-.icon{width:42px;height:42px;border-radius:14px;background:#fff;border:1px solid var(--line)}
-.page{display:none;padding:12px 20px}.page.active{display:block}.hello h1{margin:5px 0;font-size:25px}.muted{color:var(--muted);font-size:14px}
-.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 5px 22px #00000008}
-.hero{background:linear-gradient(135deg,#eef2ff,#f5f3ff)}.hero h2{margin:0 0 6px}.hero p{margin:0 0 16px;color:var(--muted)}
-.primary{width:100%;padding:14px 16px;border-radius:15px;background:linear-gradient(135deg,var(--a),var(--a2));color:#fff;font-weight:800}
-.secondary{padding:10px 13px;border-radius:12px;background:var(--soft);color:var(--a);font-weight:750}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px}.stat b{display:block;font-size:23px;margin-top:4px}
-.progress{height:9px;background:#e9eaf1;border-radius:99px;overflow:hidden}.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--a2));border-radius:99px}
-.title{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 10px}.title h2{font-size:17px;margin:0}
-.task{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border:0}.check{width:23px;height:23px;border:2px solid #cbd5e1;border-radius:7px;background:#fff}.check.done{background:var(--green);color:#fff;border-color:var(--green)}
-.task.done .name{text-decoration:line-through;color:var(--muted)}.name{flex:1}.small{font-size:12px;color:var(--muted)}
-.subject{padding:14px 0;border-bottom:1px solid var(--line)}.subject:last-child{border:0}.subject-top{display:flex;justify-content:space-between}
-.field{width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;background:#fff;outline:0}.add{display:flex;gap:8px}.add .field{flex:1}
-.timer{text-align:center;padding:28px 10px}.select{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff}.clock{font-size:64px;font-weight:900;font-variant-numeric:tabular-nums;margin:20px 0 5px}.actions{display:flex;gap:8px}.actions>*{flex:1}
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:5}.nav button{background:none;color:#8b93a3;font-size:11px;font-weight:750}.nav button b{display:block;font-size:21px;margin-bottom:2px}.nav button.active{color:var(--a)}
-.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;z-index:10}.modal.show{display:flex}.sheet{background:#fff;width:min(520px,100%);padding:20px;border-radius:24px 24px 0 0}.sheet h2{margin-top:0}.close{float:right;background:#f3f4f6;width:36px;height:36px;border-radius:10px}
-.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice button{text-align:left;padding:15px;border:1px solid var(--line);border-radius:16px;background:#fff}.choice button.selected{border:2px solid var(--a);background:var(--soft)}.choice strong{display:block}.empty{text-align:center;padding:20px;color:var(--muted)}
-</style>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon-192.png">
-<meta name="theme-color" content="#4f46e5">
+<meta name="theme-color" content="#5b4bdb">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="StudyTrack">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>StudyTrack — Study smarter</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#182033;--muted:#737b8c;--line:#e6e8ef;--primary:#5b4bdb;--primary2:#7b45e8;--soft:#f0edff;--green:#1d9b68;--danger:#d94c5b;--shadow:0 10px 30px rgba(31,35,55,.07)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{border:0;cursor:pointer}
+.app{max-width:720px;margin:auto;min-height:100vh;padding:18px 18px 100px}
+.top{display:flex;justify-content:space-between;align-items:center}.brand{font-size:28px;font-weight:850;letter-spacing:-1.5px}.brand span{color:var(--primary)}
+.iconbtn{width:46px;height:46px;border-radius:15px;background:var(--card);box-shadow:var(--shadow);font-size:20px}
+.greeting{margin-top:28px}.greeting h1{font-size:30px;margin:0 0 4px;letter-spacing:-1px}.greeting p{margin:0;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.hero{margin-top:20px;padding:22px;background:linear-gradient(135deg,#f1efff,#fff)}.hero h2{margin:0 0 4px;font-size:25px}.hero p{margin:0 0 18px;color:var(--muted)}
+.primary{width:100%;padding:15px 18px;border-radius:16px;color:#fff;font-weight:800;background:linear-gradient(90deg,var(--primary),var(--primary2));box-shadow:0 8px 20px rgba(91,75,219,.24)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.stat{padding:18px}.stat .label{color:var(--muted);font-size:14px}.stat .value{font-size:25px;font-weight:850;margin-top:5px}.section{margin-top:24px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.sectionhead h3{margin:0;font-size:19px}.linkbtn{background:var(--soft);color:var(--primary);padding:9px 13px;border-radius:12px;font-weight:800}
+.progress{height:11px;background:#e9eaf1;border-radius:99px;overflow:hidden}.bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:99px;transition:.3s}
+.task{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.check{width:23px;height:23px;border-radius:8px;border:2px solid #c9cdd8;background:#fff;display:grid;place-items:center;color:#fff;font-size:14px;flex:none}.check.done{background:var(--primary);border-color:var(--primary)}.tasktext{flex:1}.tasktext.done{text-decoration:line-through;color:var(--muted)}.small{font-size:12px;color:var(--muted);margin-top:3px}
+.empty{padding:25px;text-align:center;color:var(--muted)}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 10px calc(9px + env(safe-area-inset-bottom));z-index:20}.nav{background:none;color:#8b92a2;font-weight:750;font-size:11px;padding:7px}.nav.active{color:var(--primary)}.nav .ico{font-size:21px;display:block;margin-bottom:2px}
+.page{display:none}.page.active{display:block}.back{margin:4px 0 18px;background:none;color:var(--primary);font-weight:800}
+.timerbox{padding:28px;text-align:center}.timer{font-size:72px;font-weight:900;letter-spacing:-3px;font-variant-numeric:tabular-nums}.timerstate{color:var(--muted);margin:5px 0 20px}.subjectselect{width:100%;padding:13px;border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:12px}
+.row{display:flex;gap:10px}.row>*{flex:1}.secondary{padding:14px;border-radius:14px;background:#eef0f5;color:var(--text);font-weight:800}.danger{color:var(--danger)}
+.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field input,.field select{width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;outline:none;background:#fff}.field input:focus,.field select:focus{border-color:var(--primary)}
+.subject{padding:16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.subject:last-child{border-bottom:0}.pill{padding:6px 9px;border-radius:99px;background:var(--soft);color:var(--primary);font-size:12px;font-weight:800}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;align-items:end;height:160px}.daycol{text-align:center;font-size:11px;color:var(--muted)}.daybar{height:120px;background:#f0f1f5;border-radius:10px;display:flex;align-items:flex-end;overflow:hidden;margin-bottom:6px}.dayfill{width:100%;background:linear-gradient(180deg,var(--primary2),var(--primary));border-radius:10px 10px 0 0;min-height:2px}
+.modal{position:fixed;inset:0;background:rgba(15,18,30,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}.modal.open{display:flex}.sheet{width:min(720px,100%);background:#fff;border-radius:26px 26px 0 0;padding:22px 18px 28px;max-height:90vh;overflow:auto}.sheet h2{margin:0 0 10px}.close{float:right;background:#f0f1f5;width:36px;height:36px;border-radius:11px}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%) translateY(20px);background:#182033;color:#fff;padding:12px 16px;border-radius:13px;opacity:0;pointer-events:none;transition:.25s;z-index:70;font-weight:700;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.onboard{position:fixed;inset:0;background:var(--bg);z-index:100;display:none;align-items:center;justify-content:center;padding:22px}.onboard.show{display:flex}.onbox{width:min(520px,100%);padding:28px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.choice{padding:17px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:left;font-weight:800}.choice.selected{border:2px solid var(--primary);background:var(--soft)}
+@media(max-width:420px){.timer{font-size:62px}.app{padding-left:14px;padding-right:14px}.greeting h1{font-size:27px}}
+</style>
 </head>
 <body>
 <div class="app">
-<header><div class="brand">Study<span>Track</span></div><button class="icon" onclick="editProfile()">⚙️</button></header>
+  <header class="top"><div class="brand">Study<span>Track</span></div><button class="iconbtn" onclick="openSettings()">⚙️</button></header>
 
-<section id="home" class="page active">
-<div class="hello"><h1 id="hello">Good evening 👋</h1><div class="muted" id="profileLine">Student • All streams</div></div>
-<div class="card hero"><h2>Ready to study?</h2><p id="goalLine">Set a goal and make progress every day.</p><button class="primary" onclick="show('timer')">▶ Start Study Session</button></div>
-<div class="card"><div style="display:flex;justify-content:space-between"><b>Today's Goal</b><b id="pct">0%</b></div><div class="progress" style="margin:12px 0 8px"><i id="bar" style="width:0%"></i></div><div class="muted"><span id="today">0m</span> studied • Goal <span id="goal">5h</span></div></div>
-<div class="grid"><div class="stat"><div class="muted">🔥 Streak</div><b id="streak">0 days</b></div><div class="stat"><div class="muted">⏱ Sessions</div><b id="sessions">0</b></div></div>
-<div class="title"><h2>Today's Tasks</h2><button class="secondary" onclick="taskModal()">+ Add</button></div>
-<div class="card" id="tasks"></div>
-</section>
+  <main id="home" class="page active">
+    <section class="greeting"><h1 id="greeting">Good evening 👋</h1><p id="profileLine">Student</p></section>
+    <section class="card hero"><h2 id="heroTitle">Ready to study?</h2><p id="heroSub">Build a consistent study habit.</p><button class="primary" onclick="go('timer')">▶ Start 25-minute session</button></section>
+    <section class="card stat" style="margin-top:14px"><div class="sectionhead"><h3>Today's Goal</h3><b id="goalPct">0%</b></div><div class="progress"><div class="bar" id="goalBar" style="width:0%"></div></div><div class="small" id="goalText">0m studied · Goal 2h</div></section>
+    <div class="grid2"><div class="card stat"><div class="label">🔥 Streak</div><div class="value" id="streak">0 days</div></div><div class="card stat"><div class="label">◷ Sessions</div><div class="value" id="sessions">0</div></div></div>
+    <section class="section"><div class="sectionhead"><h3>Today's Tasks</h3><button class="linkbtn" onclick="openTask()">＋ Add</button></div><div class="card" style="padding:0 18px" id="taskList"></div></section>
+  </main>
 
-<section id="timer" class="page">
-<div class="title"><h2>Study Timer</h2></div>
-<div class="card timer">
-<select class="select" id="subjectSelect"></select>
-<div class="clock" id="clock">25:00</div><div class="muted" id="timerStatus">Ready to focus</div>
-<div class="actions" style="margin-top:22px"><button class="secondary" onclick="resetTimer()">↺ Reset</button><button class="primary" id="timerBtn" onclick="toggleTimer()">▶ Start</button></div>
-<p class="small" style="margin-top:14px">Finish a session to automatically add study time to your progress.</p>
-</div>
-<div class="card"><b>Focus tip</b><p class="muted">Choose one subject, silence distractions, and focus until the session ends.</p></div>
-</section>
+  <main id="timer" class="page">
+    <button class="back" onclick="go('home')">← Home</button>
+    <div class="card timerbox">
+      <h2>Focus Session</h2>
+      <select id="timerSubject" class="subjectselect"></select>
+      <div class="timer" id="timer">25:00</div><div class="timerstate" id="timerState">Ready to focus</div>
+      <button class="primary" id="timerBtn" onclick="toggleTimer()">▶ Start</button>
+      <div class="row" style="margin-top:10px"><button class="secondary" onclick="resetTimer()">↺ Reset</button><button class="secondary" onclick="finishTimer()">✓ Finish & Save</button></div>
+      <p class="small">A completed 25-minute session is saved automatically. You can also finish early and save the actual time.</p>
+    </div>
+  </main>
 
-<section id="progress" class="page">
-<div class="title"><h2>Progress</h2></div>
-<div class="grid"><div class="stat"><div class="muted">Today</div><b id="pToday">0m</b></div><div class="stat"><div class="muted">This week</div><b id="pWeek">0m</b></div><div class="stat"><div class="muted">All time</div><b id="pAll">0m</b></div><div class="stat"><div class="muted">Best streak</div><b id="best">0</b></div></div>
-<div class="title"><h2>By Subject</h2></div><div class="card" id="subjectStats"></div>
-</section>
+  <main id="progress" class="page">
+    <button class="back" onclick="go('home')">← Home</button><h2>Progress</h2>
+    <div class="grid2"><div class="card stat"><div class="label">Today</div><div class="value" id="pToday">0m</div></div><div class="card stat"><div class="label">This week</div><div class="value" id="pWeek">0m</div></div></div>
+    <section class="section card" style="padding:18px"><div class="sectionhead"><h3>Last 7 days</h3></div><div class="week" id="weekChart"></div></section>
+    <section class="section"><div class="sectionhead"><h3>Subject time</h3></div><div class="card" id="subjectStats" style="padding:0 18px"></div></section>
+  </main>
 
-<section id="subjects" class="page">
-<div class="title"><h2>My Subjects</h2><button class="secondary" onclick="addSubjectPrompt()">+ Add</button></div>
-<div class="card" id="subjectList"></div>
-<div class="card"><b>Quick add</b><p class="muted">Add any subject — school, college, entrance exam or self-study.</p><div class="add"><input class="field" id="newSubject" placeholder="e.g. Biology"><button class="secondary" onclick="addSubject()">Add</button></div></div>
-</section>
-
-<div class="nav"><button class="active" data-id="home" onclick="show('home')"><b>⌂</b>Home</button><button data-id="timer" onclick="show('timer')"><b>⏱</b>Timer</button><button data-id="progress" onclick="show('progress')"><b>◔</b>Progress</button><button data-id="subjects" onclick="show('subjects')"><b>📚</b>Subjects</button></div>
+  <main id="subjects" class="page">
+    <button class="back" onclick="go('home')">← Home</button><div class="sectionhead"><h2 style="margin:0">Subjects</h2><button class="linkbtn" onclick="openSubject()">＋ Add</button></div>
+    <div class="card" id="subjectList"></div>
+  </main>
 </div>
 
-<div class="modal" id="modal"><div class="sheet"><button class="close" onclick="closeModal()">✕</button><h2 id="modalTitle">Add Task</h2><div id="modalBody"></div></div></div>
+<nav class="bottom">
+  <button class="nav active" data-page="home" onclick="go('home')"><span class="ico">⌂</span>Home</button>
+  <button class="nav" data-page="timer" onclick="go('timer')"><span class="ico">⏱</span>Timer</button>
+  <button class="nav" data-page="progress" onclick="go('progress')"><span class="ico">◔</span>Progress</button>
+  <button class="nav" data-page="subjects" onclick="go('subjects')"><span class="ico">📚</span>Subjects</button>
+</nav>
+
+<div class="modal" id="modal"><div class="sheet"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<div class="onboard" id="onboard"><div class="onbox card"><div class="brand">Study<span>Track</span></div><h1>Set up your study space</h1><p style="color:var(--muted)">Choose a starting category. You can change subjects anytime.</p><div class="choices" id="choices"></div><div class="field"><label>Daily study goal (minutes)</label><input id="onGoal" type="number" min="15" step="15" value="120"></div><button class="primary" onclick="finishOnboarding()">Continue →</button></div></div>
 
 <script>
-const K='studytrack_all_v2';
-let d=JSON.parse(localStorage.getItem(K)||'null')||{
- name:'Student',stream:'Other',goal:300,
- subjects:['Mathematics','English','General Studies'],tasks:[],sessions:[],best:0
-};
-let t={sec:1500,running:false,int:null,subject:d.subjects[0]||'Study'};
-const save=()=>localStorage.setItem(K,JSON.stringify(d));
-const key=()=>new Date().toISOString().slice(0,10);
-const minsToday=()=>d.sessions.filter(x=>x.date===key()).reduce((a,x)=>a+x.minutes,0);
-const fmt=m=>{m=Math.round(m);return m<60?m+'m':Math.floor(m/60)+'h '+(m%60?m%60+'m':'')};
-function week(){let now=new Date(),start=new Date(now);start.setHours(0,0,0,0);start.setDate(start.getDate()-6);return d.sessions.filter(x=>new Date(x.date+'T23:59:59')>=start).reduce((a,x)=>a+x.minutes,0)}
-function streak(){let days=[...new Set(d.sessions.map(x=>x.date))].sort().reverse(),n=0,c=new Date();for(let x of days){if(x===c.toISOString().slice(0,10)){n++;c.setDate(c.getDate()-1)}else break}return n}
+const KEY='studytrack_v11';
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{profile:{stream:'Student',goal:120},subjects:[],tasks:[],sessions:[],lastOpen:null};
+let timer={remaining:1500,running:false,id:null,started:0};
+const streams=['Science','Commerce','Arts / Humanities','School','College','Competitive Exam','Custom'];
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function today(){return new Date().toISOString().slice(0,10)}
+function fmtMin(m){m=Math.max(0,Math.round(m)); if(m<60)return m+'m'; return Math.floor(m/60)+'h '+(m%60)+'m'}
+function dateObj(offset=0){let d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+offset);return d}
+function dateKey(d){return d.toISOString().slice(0,10)}
+function minutesFor(key){return db.sessions.filter(s=>s.date===key).reduce((a,s)=>a+(s.minutes||0),0)}
+function streak(){let n=0;for(let i=0;i<365;i++){if(minutesFor(dateKey(dateObj(-i)))>0)n++;else break}return n}
+function greeting(){let h=new Date().getHours();return h<12?'Good morning ☀️':h<18?'Good afternoon 🌤️':'Good evening 👋'}
+function toast(msg){let e=document.getElementById('toast');e.textContent=msg;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
+function go(page){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(page).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===page));render();scrollTo(0,0)}
 function render(){
-let m=minsToday(),p=Math.min(100,Math.round(m/d.goal*100)),s=streak();d.best=Math.max(d.best||0,s);save();
-document.getElementById('hello').textContent=(new Date().getHours()<12?'Good morning':new Date().getHours()<17?'Good afternoon':'Good evening')+' 👋';
-document.getElementById('profileLine').textContent=d.name+' • '+d.stream;
-document.getElementById('goalLine').textContent=p>=100?'🎉 Daily goal completed! Great work.':fmt(Math.max(0,d.goal-m))+' left to reach today’s goal.';
-document.getElementById('pct').textContent=p+'%';document.getElementById('bar').style.width=p+'%';document.getElementById('today').textContent=fmt(m);document.getElementById('goal').textContent=fmt(d.goal);document.getElementById('streak').textContent=s+' day'+(s===1?'':'s');document.getElementById('sessions').textContent=d.sessions.length;
-document.getElementById('tasks').innerHTML=d.tasks.length?d.tasks.map((x,i)=>`<div class="task ${x.done?'done':''}"><button class="check ${x.done?'done':''}" onclick="toggleTask(${i})">${x.done?'✓':''}</button><div class="name">${esc(x.name)}</div><button class="small" onclick="delTask(${i})">Delete</button></div>`).join(''):'<div class="empty">No tasks yet.<br>Add your first study task.</div>';
-document.getElementById('subjectList').innerHTML=d.subjects.map((x,i)=>{let m=d.sessions.filter(s=>s.subject===x).reduce((a,s)=>a+s.minutes,0);return `<div class="subject"><div class="subject-top"><b>📚 ${esc(x)}</b><button class="small" onclick="removeSubject(${i})">Remove</button></div><div class="small" style="margin-top:4px">${fmt(m)} studied</div></div>`}).join('');
-document.getElementById('subjectSelect').innerHTML=d.subjects.map(x=>`<option>${esc(x)}</option>`).join('')||'<option>Study</option>';if(d.subjects.includes(t.subject))document.getElementById('subjectSelect').value=t.subject;document.getElementById('subjectSelect').onchange=e=>t.subject=e.target.value;
-document.getElementById('pToday').textContent=fmt(m);document.getElementById('pWeek').textContent=fmt(week());document.getElementById('pAll').textContent=fmt(d.sessions.reduce((a,x)=>a+x.minutes,0));document.getElementById('best').textContent=d.best||0;
-document.getElementById('subjectStats').innerHTML=d.subjects.map(x=>{let q=d.sessions.filter(s=>s.subject===x).reduce((a,s)=>a+s.minutes,0),max=Math.max(1,...d.subjects.map(y=>d.sessions.filter(s=>s.subject===y).reduce((a,s)=>a+s.minutes,0)));return `<div style="margin:14px 0"><div style="display:flex;justify-content:space-between"><b>${esc(x)}</b><span class="small">${fmt(q)}</span></div><div class="progress" style="margin-top:7px"><i style="width:${Math.round(q/max*100)}%"></i></div></div>`}).join('')||'<div class="empty">Add subjects to see statistics.</div>';
+ document.getElementById('greeting').textContent=greeting();
+ document.getElementById('profileLine').textContent=(db.profile.stream||'Student')+' · '+db.subjects.length+' subject'+(db.subjects.length===1?'':'s');
+ let m=minutesFor(today()), goal=db.profile.goal||120, pct=Math.min(100,Math.round(m/goal*100));
+ document.getElementById('goalPct').textContent=pct+'%';document.getElementById('goalBar').style.width=pct+'%';document.getElementById('goalText').textContent=fmtMin(m)+' studied · Goal '+fmtMin(goal);
+ document.getElementById('streak').textContent=streak()+' day'+(streak()===1?'':'s');
+ document.getElementById('sessions').textContent=db.sessions.filter(s=>s.date===today()).length;
+ document.getElementById('heroSub').textContent=m>=goal?'Goal complete — great work! 🎉':fmtMin(Math.max(0,goal-m))+' left to reach today’s goal.';
+ renderTasks();renderSubjects();renderTimerSubjects();renderProgress();
 }
-function show(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.id===id));scrollTo(0,0)}
-function taskModal(){document.getElementById('modalTitle').textContent='Add Task';document.getElementById('modalBody').innerHTML=`<input id="taskField" class="field" placeholder="e.g. Revise Physics Chapter 2"><button class="primary" style="margin-top:12px" onclick="addTask()">Add Task</button>`;document.getElementById('modal').classList.add('show');setTimeout(()=>taskField.focus(),50)}
-function addTask(){let v=taskField.value.trim();if(v){d.tasks.unshift({name:v,done:false});save();closeModal();render()}}
-function toggleTask(i){d.tasks[i].done=!d.tasks[i].done;save();render()}function delTask(i){d.tasks.splice(i,1);save();render()}
-function addSubject(){let v=document.getElementById('newSubject').value.trim();if(v&&!d.subjects.includes(v)){d.subjects.push(v);document.getElementById('newSubject').value='';save();render()}}
-function addSubjectPrompt(){let v=prompt('Subject name');if(v&&v.trim()&&!d.subjects.includes(v.trim())){d.subjects.push(v.trim());save();render()}}
-function removeSubject(i){if(d.subjects.length<=1)return alert('Keep at least one subject.');if(confirm('Remove '+d.subjects[i]+'?')){d.subjects.splice(i,1);save();render()}}
-function editProfile(){
-document.getElementById('modalTitle').textContent='Student Setup';
-document.getElementById('modalBody').innerHTML=`<input id="nameField" class="field" value="${esc(d.name)}" placeholder="Your name"><p class="muted">Choose your stream / study category</p><div class="choice">${['Science','Commerce','Arts / Humanities','School / College','Competitive Exam','Other'].map(x=>`<button class="${d.stream===x?'selected':''}" onclick="chooseStream(this,'${x}')">📚 <strong>${x}</strong><span class="small">Flexible subjects</span></button>`).join('')}</div><button class="primary" style="margin-top:14px" onclick="saveProfile()">Save</button>`;
-document.getElementById('modal').classList.add('show')
+function renderTasks(){
+ let box=document.getElementById('taskList'), ts=db.tasks.filter(t=>t.date===today());
+ if(!ts.length){box.innerHTML='<div class="empty">No tasks yet.<br>Add your first study task.</div>';return}
+ box.innerHTML=ts.map(t=>`<div class="task"><button class="check ${t.done?'done':''}" onclick="toggleTask('${t.id}')">${t.done?'✓':''}</button><div class="tasktext ${t.done?'done':''}"><b>${escapeHtml(t.title)}</b><div class="small">${escapeHtml(t.subject||'General')}</div></div><button class="linkbtn" onclick="deleteTask('${t.id}')">×</button></div>`).join('')
 }
-let chosen=null;function chooseStream(el,x){chosen=x;document.querySelectorAll('.choice button').forEach(b=>b.classList.remove('selected'));el.classList.add('selected')}
-function saveProfile(){let n=document.getElementById('nameField').value.trim();if(n)d.name=n;if(chosen)d.stream=chosen;save();closeModal();render()}
-function closeModal(){document.getElementById('modal').classList.remove('show');chosen=null}
-function resetTimer(){clearInterval(t.int);t.running=false;t.sec=1500;document.getElementById('timerBtn').textContent='▶ Start';document.getElementById('timerStatus').textContent='Ready to focus';clock()}
-function clock(){let m=Math.floor(t.sec/60),s=t.sec%60;document.getElementById('clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
-function toggleTimer(){if(t.running){clearInterval(t.int);t.running=false;document.getElementById('timerBtn').textContent='▶ Resume';document.getElementById('timerStatus').textContent='Paused';return}t.running=true;document.getElementById('timerBtn').textContent='⏸ Pause';document.getElementById('timerStatus').textContent='Focus mode is on';t.int=setInterval(()=>{t.sec--;clock();if(t.sec<=0)finish()},1000)}
-function finish(){clearInterval(t.int);t.running=false;d.sessions.push({date:key(),minutes:25,subject:t.subject||'Study'});save();t.sec=1500;document.getElementById('timerBtn').textContent='▶ Start';document.getElementById('timerStatus').textContent='Session saved 🎉';clock();render()}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-render();clock();
-</script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(console.error));
+function renderSubjects(){
+ let box=document.getElementById('subjectList');if(!db.subjects.length){box.innerHTML='<div class="empty">No subjects yet.<br>Add your first subject.</div>';return}
+ box.innerHTML=db.subjects.map(s=>`<div class="subject"><div><b>${escapeHtml(s.name)}</b><div class="small">${escapeHtml(s.stream||db.profile.stream)}</div></div><span class="pill">${fmtMin(db.sessions.filter(x=>x.subject===s.name).reduce((a,x)=>a+(x.minutes||0),0))}</span></div>`).join('')
 }
+function renderTimerSubjects(){
+ let sel=document.getElementById('timerSubject'), cur=sel.value;
+ sel.innerHTML='<option value="">General study</option>'+db.subjects.map(s=>`<option>${escapeHtml(s.name)}</option>`).join('');
+ if([...sel.options].some(o=>o.value===cur))sel.value=cur;
+}
+function renderProgress(){
+ let t=minutesFor(today()), w=0;for(let i=0;i<7;i++)w+=minutesFor(dateKey(dateObj(-i)));
+ document.getElementById('pToday').textContent=fmtMin(t);document.getElementById('pWeek').textContent=fmtMin(w);
+ let vals=[];for(let i=6;i>=0;i--)vals.push({k:dateKey(dateObj(-i)),label:dateObj(-i).toLocaleDateString(undefined,{weekday:'short'}),m:minutesFor(dateKey(dateObj(-i)))});
+ let max=Math.max(60,...vals.map(x=>x.m));document.getElementById('weekChart').innerHTML=vals.map(x=>`<div class="daycol"><div class="daybar"><div class="dayfill" style="height:${Math.max(2,Math.round(x.m/max*100))}%"></div></div>${x.label}<br>${x.m}m</div>`).join('');
+ let stats=db.subjects.map(s=>({n:s.name,m:db.sessions.filter(x=>x.subject===s.name).reduce((a,x)=>a+(x.minutes||0),0)})).sort((a,b)=>b.m-a.m);
+ document.getElementById('subjectStats').innerHTML=stats.length?stats.map(x=>`<div class="subject"><b>${escapeHtml(x.n)}</b><span class="pill">${fmtMin(x.m)}</span></div>`).join(''):'<div class="empty">Study by subject to see analytics.</div>';
+}
+function openTask(){openModal(`<h2>Add study task</h2><div class="field"><label>Task</label><input id="taskTitle" placeholder="e.g. Economics — Chapter 2"></div><div class="field"><label>Subject</label><select id="taskSubject"><option value="">General</option>${db.subjects.map(s=>`<option>${escapeHtml(s.name)}</option>`).join('')}</select></div><button class="primary" onclick="addTask()">Add task</button>`)}
+function addTask(){let title=document.getElementById('taskTitle').value.trim();if(!title)return toast('Enter a task first');db.tasks.unshift({id:crypto.randomUUID(),title,subject:document.getElementById('taskSubject').value,date:today(),done:false});save();closeModal();render();toast('Task added ✓')}
+function toggleTask(id){let t=db.tasks.find(x=>x.id===id);if(t){t.done=!t.done;save();render()}}
+function deleteTask(id){db.tasks=db.tasks.filter(x=>x.id!==id);save();render();toast('Task deleted')}
+function openSubject(){openModal(`<h2>Add subject</h2><div class="field"><label>Subject name</label><input id="subjectName" placeholder="e.g. Accountancy"></div><button class="primary" onclick="addSubject()">Add subject</button>`)}
+function addSubject(){let n=document.getElementById('subjectName').value.trim();if(!n)return toast('Enter a subject');if(db.subjects.some(s=>s.name.toLowerCase()===n.toLowerCase()))return toast('Subject already exists');db.subjects.push({name:n,stream:db.profile.stream});save();closeModal();render();toast('Subject added ✓')}
+function openSettings(){openModal(`<h2>Settings</h2><div class="field"><label>Study category</label><select id="setStream">${streams.map(s=>`<option ${s===db.profile.stream?'selected':''}>${s}</option>`).join('')}</select></div><div class="field"><label>Daily goal (minutes)</label><input id="setGoal" type="number" min="15" step="15" value="${db.profile.goal}"></div><button class="primary" onclick="saveSettings()">Save settings</button><div style="margin-top:12px"><button class="secondary" style="width:100%" onclick="resetAll()">Reset all data</button></div>`)}
+function saveSettings(){db.profile.stream=document.getElementById('setStream').value;db.profile.goal=Math.max(15,+document.getElementById('setGoal').value||120);save();closeModal();render();toast('Settings saved ✓')}
+function resetAll(){if(confirm('Delete all StudyTrack data?')){localStorage.removeItem(KEY);location.reload()}}
+function openModal(c){document.getElementById('modalContent').innerHTML=c;document.getElementById('modal').classList.add('open')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function timerDisplay(){let s=Math.max(0,timer.remaining),m=Math.floor(s/60),ss=s%60;document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0')}
+function toggleTimer(){
+ if(timer.running){clearInterval(timer.id);timer.running=false;document.getElementById('timerBtn').textContent='▶ Resume';document.getElementById('timerState').textContent='Paused';return}
+ if(timer.remaining===1500)timer.started=Date.now();timer.running=true;document.getElementById('timerBtn').textContent='⏸ Pause';document.getElementById('timerState').textContent='Focus mode is on';
+ timer.id=setInterval(()=>{timer.remaining--;timerDisplay();if(timer.remaining<=0)finishTimer(true)},1000)
+}
+function resetTimer(){clearInterval(timer.id);timer.running=false;timer.remaining=1500;timer.started=0;document.getElementById('timerBtn').textContent='▶ Start';document.getElementById('timerState').textContent='Ready to focus';timerDisplay()}
+function finishTimer(auto=false){
+ clearInterval(timer.id);timer.running=false;let elapsed=1500-timer.remaining;
+ if(auto)elapsed=1500;
+ if(elapsed>=60){let mins=Math.round(elapsed/60);db.sessions.push({date:today(),minutes:mins,subject:document.getElementById('timerSubject').value||'General study',at:Date.now()});save();toast(auto?'25-minute session complete 🎉':'Session saved ✓');document.getElementById('timerState').textContent=(auto?'Session complete 🎉':'Session saved ✓')}
+ else document.getElementById('timerState').textContent='Study for at least 1 minute to save';
+ timer.remaining=1500;timer.started=0;document.getElementById('timerBtn').textContent='▶ Start';timerDisplay();render()
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function finishOnboarding(){let chosen=document.querySelector('.choice.selected');db.profile.stream=chosen?chosen.dataset.v: 'Student';db.profile.goal=Math.max(15,+document.getElementById('onGoal').value||120);let defaults={Science:['Physics','Chemistry','Mathematics','Biology'],Commerce:['Accountancy','Business Studies','Economics','English'], 'Arts / Humanities':['History','Political Science','Geography','English'],School:['Mathematics','Science','English'],College:['Major Subject','English'], 'Competitive Exam':['Quantitative Aptitude','Reasoning','English','Current Affairs'],Custom:[]};db.subjects=(defaults[db.profile.stream]||[]).map(name=>({name,stream:db.profile.stream}));save();document.getElementById('onboard').classList.remove('show');render();toast('Welcome to StudyTrack 🎉')}
+function init(){if(!localStorage.getItem(KEY)){document.getElementById('choices').innerHTML=streams.map(s=>`<button class="choice" data-v="${s}" onclick="document.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));this.classList.add('selected')">${s}</button>`).join('');document.getElementById('onboard').classList.add('show')}render();timerDisplay()}
+init();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script>
 </body>
 </html>
